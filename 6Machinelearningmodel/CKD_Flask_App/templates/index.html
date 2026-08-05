@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CKD Prediction</title>
+</head>
+
+<body>
+
+<h2>Chronic Kidney Disease Prediction</h2>
+
+<form action="/predict" method="POST">
+
+    Blood Glucose Random
+    <input type="number" step="any" name="bgr"><br><br>
+
+    Blood Urea
+    <input type="number" step="any" name="bu"><br><br>
+
+    Serum Creatinine
+    <input type="number" step="any" name="sc"><br><br>
+
+    Packed Cell Volume
+    <input type="number" step="any" name="pcv"><br><br>
+
+    White Blood Cell Count
+    <input type="number" step="any" name="wc"><br><br>
+
+    <input type="submit" value="Predict">
+
+</form>
+
+</body>
+</html>

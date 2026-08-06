@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CKD Prediction</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right,#74ebd5,#ACB6E5);
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            width:450px;
+            margin:40px auto;
+            background:white;
+            padding:25px;
+            border-radius:15px;
+            box-shadow:0 0 15px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            text-align:center;
+            color:#0d47a1;
+        }
+
+        label{
+            font-weight:bold;
+            color:#333;
+        }
+
+        span{
+            color:#e91e63;
+            font-size:13px;
+            font-weight:bold;
+        }
+
+        input[type=number]{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            border:2px solid #2196F3;
+            border-radius:8px;
+            box-sizing:border-box;
+            font-size:15px;
+        }
+
+        input[type=number]:focus{
+            outline:none;
+            border-color:#4CAF50;
+            box-shadow:0 0 8px #4CAF50;
+        }
+
+        input[type=submit]{
+            width:100%;
+            padding:12px;
+            background:#4CAF50;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-size:18px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        input[type=submit]:hover{
+            background:#2E7D32;
+        }
+
+        .result{
+            margin-top:20px;
+            text-align:center;
+            padding:15px;
+            border-radius:10px;
+            background:#E3F2FD;
+        }
+
+        .ckd{
+            color:red;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .normal{
+            color:green;
+            font-size:22px;
+            font-weight:bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🩺 Chronic Kidney Disease Prediction</h2>
+
+<form action="/predict" method="POST">
+
+<label>
+Blood Glucose Random
+<span>(22 - 490)</span>
+</label><br>
+<input type="number" name="bgr" min="22" max="490" step="any" required><br><br>
+
+<label>
+Blood Urea
+<span>(1.5 - 391)</span>
+</label><br>
+<input type="number" name="bu" min="1.5" max="391" step="any" required><br><br>
+
+<label>
+Serum Creatinine
+<span>(0.4 - 76)</span>
+</label><br>
+<input type="number" name="sc" min="0.4" max="76" step="any" required><br><br>
+
+<label>
+Packed Cell Volume
+<span>(9 - 54)</span>
+</label><br>
+<input type="number" name="pcv" min="9" max="54" step="any" required><br><br>
+
+<label>
+White Blood Cell Count
+<span>(2200 - 26400)</span>
+</label><br>
+<input type="number" name="wc" min="2200" max="26400" step="any" required><br><br>
+
+<input type="submit" value="Predict">
+
+</form>
+
+{% if prediction %}
+<div class="result">
+
+<h3>Prediction Result</h3>
+
+{% if prediction == "CKD Detected" %}
+<p class="ckd">🔴 {{ prediction }}</p>
+{% else %}
+<p class="normal">🟢 {{ prediction }}</p>
+{% endif %}
+
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>

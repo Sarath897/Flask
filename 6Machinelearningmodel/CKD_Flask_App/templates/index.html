@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CKD Prediction</title>
+</head>
+
+<body>
+
+<h2>Chronic Kidney Disease Prediction</h2>
+
+<form action="/predict" method="POST">
+
+  <label>
+        Blood Glucose Random
+        <span style=>(Range: 22 - 490)</span>
+    </label><br>
+    <input type="number" step="any" name="bgr" min="22" max="490" required>
+    <br><br>
+
+    <label>
+        Blood Urea
+        <span style=>(Range: 1.5 - 391)</span>
+    </label><br>
+    <input type="number" step="any" name="bu" min="1.5" max="391" required>
+    <br><br>
+
+    <label>
+        Serum Creatinine
+        <span style=>(Range: 0.4 - 76)</span>
+    </label><br>
+    <input type="number" step="any" name="sc" min="0.4" max="76" required>
+    <br><br>
+
+    <label>
+        Packed Cell Volume
+        <span style=>(Range: 9 - 54)</span>
+    </label><br>
+    <input type="number" step="any" name="pcv" min="9" max="54" required>
+    <br><br>
+
+    <label>
+        White Blood Cell Count
+        <span style=>(Range: 2200 - 26400)</span>
+    </label><br>
+    <input type="number" step="any" name="wc" min="2200" max="26400" required>
+    <br><br>
+
+
+    <input type="submit" value="Predict">
+
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#& "$env:USERPROFILE\anaconda3\python.exe" app.py

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Industries India Pvt Ltd - Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            /* Vibrant multi-color animated mesh gradient background */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientAnimation 12s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(10, 0, 0, 0.25), 
+                        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.35);
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2D3748, #4A5568);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        /* Result Banners */
+        .result-card {
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card.danger {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%);
+            border: 2px solid #FEB2B2;
+            color: #C53030;
+        }
+
+        .result-card.success {
+            background: linear-gradient(135deg, #F0FFF4 0%, #C6F6D5 100%);
+            border: 2px solid #9AE6B4;
+            color: #22543D;
+        }
+
+        .result-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .prob-badge {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Metrics grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .metric-item {
+            background: #F7FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 14px 16px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1A202C;
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: flex;
+            gap: 14px;
+        }
+
+        .btn {
+            flex: 1;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.35);
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 26px rgba(118, 75, 162, 0.45);
+        }
+
+        .btn.secondary {
+            background: #EDF2F7;
+            color: #4A5568;
+            border: 1px solid #CBD5E0;
+        }
+
+        .btn.secondary:hover {
+            background: #E2E8F0;
+            color: #2D3748;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 580px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header-badge">SK Industries India Pvt Ltd</div>
+    <h1>Prediction Result</h1>
+
+    <div class="result-card {{ 'danger' if prediction == 1 else 'success' }}">
+        <h2>
+            <span>{{ "⚠️" if prediction == 1 else "✅" }}</span> 
+            <span>{{ result }}</span>
+        </h2>
+        <div class="prob-badge">Failure Probability: {{ probability }}%</div>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-item">
+            <span class="metric-label">Air Temperature</span>
+            <span class="metric-value">{{ values[0] }} K</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">Process Temperature</span>
+            <span class="metric-value">{{ values[1] }} K</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">Rotational Speed</span>
+            <span class="metric-value">{{ "%.0f"|format(values[2]) }} RPM</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">Torque</span>
+            <span class="metric-value">{{ "%.0f"|format(values[3]) }} Nm</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">Tool Wear</span>
+            <span class="metric-value">{{ "%.0f"|format(values[4]) }} mins</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">Machine Age</span>
+            <span class="metric-value">{{ "%.0f"|format(values[5] * 365) }} days</span>
+        </div>
+        <div class="metric-item" style="grid-column: span 2;">
+            <span class="metric-label">Operating Hours</span>
+            <span class="metric-value">{{ "%.2f"|format(values[6]) }} hrs</span>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn primary" href="/predict">New Prediction</a>
+        <a class="btn secondary" href="/dashboard">Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

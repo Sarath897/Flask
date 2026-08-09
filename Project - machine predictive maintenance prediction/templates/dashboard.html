@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SK Industries India Pvt Ltd - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1300px;
+            margin: auto;
+
+            background: #ffffff;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        /* Header */
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            font-size: 34px;
+
+            background: linear-gradient(
+                90deg,
+                #9d8ceb,
+                #a324ff,
+                #ee5d50
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #718096;
+            margin-top: 8px;
+        }
+
+
+        /* Colourful Cards */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .card {
+            padding: 25px;
+
+            border-radius: 15px;
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.15);
+
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card b {
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            opacity: 0.9;
+        }
+
+        .card p {
+            font-size: 35px;
+
+            font-weight: bold;
+
+            margin: 10px 0 0 0;
+        }
+
+        .card-total {
+            background: linear-gradient(
+                135deg,
+                #9889dc 0%,
+                #7352ff 100%
+            );
+        }
+
+        .card-normal {
+            background: linear-gradient(
+                135deg,
+                #4caf95 0%,
+                #00b887 100%
+            );
+        }
+
+        .card-failure {
+            background: linear-gradient(
+                135deg,
+                #ee5d50 0%,
+                #eb4e4e 100%
+            );
+        }
+
+
+        /* Table */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background: white;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 0 10px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: #f6f8fd;
+
+            color: #4318ff;
+
+            text-align: center;
+
+            padding: 14px;
+
+            font-size: 13px;
+
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 13px;
+
+            text-align: center;
+
+            border-bottom: 1px solid #e9edf7;
+
+            color: #2b3674;
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f8f9ff;
+        }
+
+
+        /* Result Badges */
+
+        .badge {
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 12px;
+
+            display: inline-block;
+        }
+
+        .badge-normal {
+            background-color: #e6f9f0;
+
+            color: #05cd99;
+        }
+
+        .badge-failure {
+            background-color: #fde8e8;
+
+            color: #ee5d50;
+        }
+
+
+        /* Buttons */
+
+        .btn-container {
+            margin-top: 25px;
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 11px 22px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            color: white;
+
+            background: linear-gradient(
+                135deg,
+                #4318ff,
+                #7352ff
+            );
+
+            box-shadow:
+                0 4px 10px rgba(67,24,255,0.2);
+
+            transition: 0.2s;
+        }
+
+        .btn.secondary {
+            background: #2b3674;
+
+            box-shadow:
+                0 4px 10px rgba(43,54,116,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            opacity: 0.9;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>
+            SK Industries India Pvt Ltd
+        </h1>
+
+        <p>
+            Predictive Maintenance Dashboard
+        </p>
+
+    </div>
+
+
+    <!-- Colourful Stat Cards -->
+
+    <div class="cards">
+
+        <div class="card card-total">
+
+            <b>
+                Total Predictions
+            </b>
+
+            <p>
+                {{ total }}
+            </p>
+
+        </div>
+
+
+        <div class="card card-normal">
+
+            <b>
+                Normal Status
+            </b>
+
+            <p>
+                {{ normal }}
+            </p>
+
+        </div>
+
+
+        <div class="card card-failure">
+
+            <b>
+                Failure Status
+            </b>
+
+            <p>
+                {{ failures }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Data Table -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Air Temp</th>
+
+                    <th>Process Temp</th>
+
+                    <th>Speed</th>
+
+                    <th>Torque</th>
+
+                    <th>Wear</th>
+
+                    <th>Age</th>
+
+                    <th>Hours</th>
+
+                    <th>Result</th>
+
+                    <th>Probability</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in rows %}
+
+                <tr>
+
+                    <td>
+                        {{ row["id"] }}
+                    </td>
+
+                    <td>
+                        {{ row["air_temperature"] }}
+                    </td>
+
+                    <td>
+                        {{ row["process_temperature"] }}
+                    </td>
+
+                    <td>
+                        {{ row["rotational_speed"] }}
+                    </td>
+
+                    <td>
+                        {{ row["torque"] }}
+                    </td>
+
+                    <td>
+                        {{ row["tool_wear"] }}
+                    </td>
+
+                    <td>
+                        {{ row["machine_age"] }}
+                    </td>
+
+                    <td>
+                        {{ row["operating_hours"] }}
+                    </td>
+
+
+                    <td>
+
+                        {% if row["prediction"] == 1 %}
+
+                            <span class="badge badge-failure">
+                                Failure
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge badge-normal">
+                                Normal
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <b>
+                            {{ "%.2f"|format(row["probability"] * 100) }}%
+                        </b>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Navigation Buttons -->
+
+    <div class="btn-container">
+
+        <a class="btn" href="/">
+            ← Home
+        </a>
+
+        <a class="btn secondary" href="/predict">
+            + New Prediction
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

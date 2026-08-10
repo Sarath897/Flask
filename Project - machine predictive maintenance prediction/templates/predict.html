@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SK Industries India Pvt Ltd - Machine Failure Prediction</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            background: linear-gradient(
+                -45deg,
+                #ff6b6b,
+                #feca57,
+                #48dbfb,
+                #1dd1a1,
+                #5f27cd,
+                #ff9ff3
+            );
+            background-size: 400% 400%;
+            animation: gradientAnimation 12s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0%   { background-position: 0% 50%; }
+            25%  { background-position: 50% 100%; }
+            50%  { background-position: 100% 50%; }
+            75%  { background-position: 50% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.25),
+                0 0 0 2px rgba(255, 255, 255, 0.5) inset;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 9px 18px;
+            border-radius: 25px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(255, 65, 108, 0.35);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5f27cd, #00a8ff, #10ac84);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 28px;
+            line-height: 1.3;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #2D3748;
+            margin-bottom: 8px;
+        }
+
+        label span {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 9px;
+            border-radius: 8px;
+        }
+
+        .badge-temp-air {
+            background: linear-gradient(135deg, #dff6ff, #b8e8ff);
+            color: #087ea4;
+        }
+
+        .badge-temp-proc {
+            background: linear-gradient(135deg, #fff3b0, #ffd166);
+            color: #9c6500;
+        }
+
+        .badge-speed {
+            background: linear-gradient(135deg, #d8f9ff, #90e0ef);
+            color: #007c91;
+        }
+
+        .badge-torque {
+            background: linear-gradient(135deg, #ffe0b2, #ffb870);
+            color: #a84b00;
+        }
+
+        .badge-wear {
+            background: linear-gradient(135deg, #ffd6e0, #ff9fb3);
+            color: #b4234d;
+        }
+
+        .badge-age {
+            background: linear-gradient(135deg, #eadcff, #c9a7ff);
+            color: #6935b8;
+        }
+
+        .badge-hours {
+            background: linear-gradient(135deg, #c8fff0, #7ee8d1);
+            color: #087f6b;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1A202C;
+            border: 2px solid #E2E8F0;
+            border-radius: 13px;
+            outline: none;
+            background: #F8FAFC;
+            transition: all 0.25s ease;
+        }
+
+        input:hover {
+            border-color: #A5B4FC;
+            background: #FFFFFF;
+        }
+
+        input:focus {
+            border-color: #7C3AED;
+            background: #FFFFFF;
+            box-shadow:
+                0 0 0 4px rgba(124, 58, 237, 0.18),
+                0 8px 20px rgba(124, 58, 237, 0.10);
+            transform: translateY(-2px);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 17px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #a855f7);
+            color: #FFFFFF;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(118, 75, 162, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 32px rgba(118, 75, 162, 0.45);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .back {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            color: #667085;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back:hover {
+            color: #5f27cd;
+        }
+
+        .btn.secondary {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ffd86f, #ffb347);
+            color: #6b3e00;
+            font-size: 15px;
+            font-weight: 800;
+            border: 1px solid #f6c453;
+            box-shadow: 0 8px 18px rgba(255, 179, 71, 0.30);
+            transition: all 0.3s ease;
+        }
+
+        .btn.secondary:hover {
+            background: linear-gradient(135deg, #ffc94a, #ff9f43);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(255, 159, 67, 0.40);
+        }
+
+        @media (max-width: 580px) {
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .header-badge { font-size: 13px; }
+            h1 { font-size: 26px; }
+            .container { padding: 28px 22px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header-badge">SK Industries India Pvt Ltd</div>
+    <h1>Preventive Maintenance </h1>
+
+    <form action="/predict" method="POST" onsubmit="prepareFormData()">
+
+        <!-- Air Temperature -->
+        <div class="form-group">
+            <label>
+                Air Temperature
+                <span class="badge-temp-air">250°C - 750°C</span>
+            </label>
+            <input 
+                name="air_temperature" 
+                type="number" 
+                min="250" 
+                max="750" 
+                step="any" 
+                placeholder="e.g. 300" 
+                oninput="clampInput(this, 250, 750, false)"
+                onblur="clampInput(this, 250, 750, true)"
+                required
+            >
+        </div>
+
+        <!-- Process Temperature -->
+        <div class="form-group">
+            <label>
+                Process Temperature
+                <span class="badge-temp-proc">250°C - 750°C</span>
+            </label>
+            <input 
+                name="process_temperature" 
+                type="number" 
+                min="250" 
+                max="750" 
+                step="any" 
+                placeholder="e.g. 310" 
+                oninput="clampInput(this, 250, 750, false)"
+                onblur="clampInput(this, 250, 750, true)"
+                required
+            >
+        </div>
+
+        <!-- Rotational Speed -->
+        <div class="form-group">
+            <label>
+                Rotational Speed
+                <span class="badge-speed">1000 - 3000 RPM</span>
+            </label>
+            <input 
+                name="rotational_speed" 
+                type="number" 
+                min="1000" 
+                max="3000" 
+                step="any" 
+                placeholder="e.g. 1500" 
+                oninput="clampInput(this, 1000, 3000, false)"
+                onblur="clampInput(this, 1000, 3000, true)"
+                required
+            >
+        </div>
+
+        <!-- Torque -->
+        <div class="form-group">
+            <label>
+                Torque
+                <span class="badge-torque">0 - 100 Nm</span>
+            </label>
+            <input 
+                name="torque" 
+                type="number" 
+                min="0" 
+                max="100" 
+                step="any" 
+                placeholder="e.g. 40" 
+                oninput="clampInput(this, 0, 100, false)"
+                onblur="clampInput(this, 0, 100, true)"
+                required
+            >
+        </div>
+
+        <!-- Tool Wear -->
+        <div class="form-group">
+            <label>
+                Tool Wear
+                <span class="badge-wear">0 - 300 Mins</span>
+            </label>
+            <input 
+                name="tool_wear" 
+                type="number" 
+                min="0" 
+                max="300" 
+                step="any" 
+                placeholder="e.g. 120" 
+                oninput="clampInput(this, 0, 300, false)"
+                onblur="clampInput(this, 0, 300, true)"
+                required
+            >
+        </div>
+
+        <!-- Machine Age -->
+        <div class="form-row">
+            <div class="form-group form-col">
+                <label>
+                    Machine Age (Years)
+                    <span class="badge-age">0 - 20 yrs</span>
+                </label>
+                <input 
+                    name="machine_age_years" 
+                    type="number" 
+                    min="0" 
+                    max="20" 
+                    step="1" 
+                    placeholder="0 - 20" 
+                    oninput="clampInput(this, 0, 20, false)"
+                    onblur="clampInput(this, 0, 20, true)"
+                    required
+                >
+            </div>
+
+            <div class="form-group form-col">
+                <label>
+                    Machine Age (Months)
+                    <span class="badge-age">0 - 11 mos</span>
+                </label>
+                <input 
+                    name="machine_age_months" 
+                    type="number" 
+                    min="0" 
+                    max="11" 
+                    step="1" 
+                    placeholder="0 - 11" 
+                    oninput="clampInput(this, 0, 11, false)"
+                    onblur="clampInput(this, 0, 11, true)"
+                    required
+                >
+            </div>
+        </div>
+
+        <!-- Hidden payload calculated before form submission -->
+        <input type="hidden" name="machine_age" id="machine_age">
+
+        <!-- Operating Hours -->
+        <div class="form-group">
+            <label>
+                Operating Hours
+                <span class="badge-hours">HH:MM (e.g., 250:30)</span>
+            </label>
+
+            <input 
+                id="operating_hours_input"
+                name="operating_hours" 
+                type="text"
+                placeholder="HH:MM"
+                pattern="^[0-9]{1,5}:[0-5][0-9]$"
+                oninput="formatTimeInput(this)"
+                required
+            >
+        </div>
+
+        <button type="submit">Predict</button>
+
+    </form>
+    <a class="back" href="/">← Back to Home</a>
+
+    <a class="btn secondary" href="/dashboard">Go to Dashboard</a>
+    
+</div>
+
+<script>
+/**
+ * Restricts numeric inputs:
+ * - Instantly prevents typing values above max.
+ * - Restores value to min on blur if input is lower than minimum or invalid.
+ */
+function clampInput(input, min, max, isBlur) {
+    if (input.value === "") return;
+
+    let val = parseFloat(input.value);
+
+    if (val > max) {
+        input.value = max;
+    }
+
+    if (isBlur) {
+        if (isNaN(val) || val < min) {
+            input.value = min;
+        }
+    }
+}
+
+/**
+ * Formats time string into HH:MM on user input.
+ */
+function formatTimeInput(input) {
+    let clean = input.value.replace(/[^0-9]/g, '');
+    if (clean.length > 2) {
+        let hours = clean.slice(0, clean.length - 2);
+        let mins = clean.slice(-2);
+        
+        // Ensure minutes do not exceed 59
+        if (parseInt(mins, 10) > 59) mins = "59";
+        
+        input.value = hours + ":" + mins;
+    } else {
+        input.value = clean;
+    }
+}
+
+/**
+ * Combines Years + Months into decimal years for Flask backend
+ */
+function prepareFormData() {
+    const years = parseFloat(document.querySelector('[name="machine_age_years"]').value) || 0;
+    const months = parseFloat(document.querySelector('[name="machine_age_months"]').value) || 0;
+    document.getElementById('machine_age').value = (years + (months / 12)).toFixed(4);
+}
+</script>
+
+</body>
+</html>

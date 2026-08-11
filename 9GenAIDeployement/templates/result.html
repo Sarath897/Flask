@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>OpenAI Chat</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+rel="stylesheet">
+
+<style>
+
+body{
+
+background:#343541;
+font-family:Poppins,sans-serif;
+margin:0;
+color:white;
+
+}
+
+.container{
+
+max-width:900px;
+margin:auto;
+padding:40px;
+
+}
+
+.chat{
+
+display:flex;
+margin-bottom:30px;
+
+}
+
+.avatar{
+
+width:50px;
+height:50px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+margin-right:20px;
+
+}
+
+.user{
+
+background:#0d6efd;
+
+}
+
+.ai{
+
+background:#10a37f;
+
+}
+
+.message{
+
+background:#444654;
+padding:20px;
+border-radius:12px;
+width:100%;
+line-height:1.8;
+font-size:17px;
+word-wrap:break-word;
+
+}
+
+.message h1,
+.message h2,
+.message h3{
+
+margin-top:20px;
+color:white;
+
+}
+
+.message p{
+
+margin-bottom:15px;
+
+}
+
+.message ul{
+
+padding-left:30px;
+
+}
+
+.message li{
+
+margin-bottom:10px;
+
+}
+
+.message code{
+
+background:#202123;
+padding:3px 6px;
+border-radius:5px;
+
+}
+
+.message pre{
+
+background:#202123;
+padding:15px;
+overflow:auto;
+border-radius:10px;
+
+}
+
+.message table{
+
+border-collapse:collapse;
+width:100%;
+margin-top:20px;
+
+}
+
+.message table,
+.message th,
+.message td{
+
+border:1px solid #666;
+
+}
+
+.message th,
+.message td{
+
+padding:12px;
+
+}
+
+.btn{
+
+display:inline-block;
+margin-top:20px;
+padding:12px 25px;
+background:#10a37f;
+color:white;
+text-decoration:none;
+border-radius:8px;
+
+}
+
+.btn:hover{
+
+background:#0b8a68;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="chat">
+
+<div class="avatar user">
+👤
+</div>
+
+<div class="message">
+
+<strong>Your Question</strong>
+
+<hr>
+
+{{ prompt }}
+
+</div>
+
+</div>
+
+<div class="chat">
+
+<div class="avatar ai">
+🤖
+</div>
+
+<div class="message">
+
+<strong>OpenAI Response</strong>
+
+<hr>
+
+{{ response|safe }}
+
+</div>
+
+</div>
+
+<a href="/" class="btn">
+New Chat
+</a>
+
+</div>
+
+</body>
+
+</html>

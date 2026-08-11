@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Chat</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#202123;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .chat-container{
+            width:900px;
+            height:90vh;
+            background:#343541;
+            border-radius:15px;
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
+            box-shadow:0 15px 40px rgba(0,0,0,.4);
+        }
+
+        .header{
+            background:#202123;
+            padding:20px;
+            text-align:center;
+            border-bottom:1px solid #444654;
+        }
+
+        .header h2{
+            font-size:28px;
+            font-weight:600;
+        }
+
+        .header p{
+            margin-top:5px;
+            color:#bdbdbd;
+            font-size:14px;
+        }
+
+        .chat-body{
+            flex:1;
+            padding:40px;
+            overflow-y:auto;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .welcome{
+            text-align:center;
+            max-width:600px;
+        }
+
+        .welcome h1{
+            font-size:36px;
+            margin-bottom:15px;
+        }
+
+        .welcome p{
+            color:#c5c5d2;
+            line-height:1.6;
+        }
+
+        .input-area{
+            background:#40414f;
+            padding:20px;
+            border-top:1px solid #555;
+        }
+
+        form{
+            display:flex;
+            gap:15px;
+            align-items:flex-end;
+        }
+
+        textarea{
+            flex:1;
+            resize:none;
+            border:none;
+            outline:none;
+            border-radius:12px;
+            background:#343541;
+            color:white;
+            padding:15px;
+            font-size:16px;
+            min-height:65px;
+        }
+
+        textarea::placeholder{
+            color:#a9a9b3;
+        }
+
+        button{
+            width:120px;
+            height:55px;
+            border:none;
+            border-radius:12px;
+            background:#10a37f;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        button:hover{
+            background:#0d8c6d;
+            transform:translateY(-2px);
+        }
+
+        .footer{
+            text-align:center;
+            color:#a5a5a5;
+            font-size:12px;
+            margin-top:10px;
+        }
+
+        @media(max-width:900px){
+
+            .chat-container{
+                width:100%;
+                height:100vh;
+                border-radius:0;
+            }
+
+            form{
+                flex-direction:column;
+            }
+
+            button{
+                width:100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="header">
+            <h2>🤖 OpenAI Chatbot</h2>
+            <p>Ask anything and get AI-powered responses.</p>
+        </div>
+
+        <div class="chat-body">
+
+            <div class="welcome">
+                <h1>How can I help you today?</h1>
+                <p>
+                    Enter your question below and click <b>Send</b>.
+                    The AI assistant will generate a response for your query.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="input-area">
+
+            <form action="/chat" method="POST">
+
+                <textarea
+                    name="prompt"
+                    placeholder="Message ChatGPT..."
+                    required></textarea>
+
+                <button type="submit">
+                    Send
+                </button>
+
+            </form>
+
+            <div class="footer">
+                AI can make mistakes. Please verify important information.
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
